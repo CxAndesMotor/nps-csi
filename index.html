@@ -5,26 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Reportes Andes Motor</title>
     <style>
+        /* 1. Normalización básica para evitar scrollbars dobles */
         body, html { 
             margin: 0; 
             padding: 0; 
             height: 100%; 
-            overflow: hidden; /* Esto es vital: corta lo que sobresalga */
+            width: 100%;
+            overflow: hidden; /* IMPORTANTE: Oculta lo que cortamos */
+            background-color: #f0f2f5; /* Color de fondo por si algo carga lento */
         }
         
+        /* 2. Contenedor para controlar el recorte */
+        .iframe-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* 3. El Iframe y su lógica responsiva */
         iframe { 
-            display: block;
             width: 100%;
             border: none;
-            
-            /* --- EL TRUCO DE LA GUILLOTINA --- */
             position: relative;
-            top: -24px;              /* Subimos el iframe 24 pixeles (escondemos la barra) */
-            height: calc(100% + 24px); /* Hacemos el iframe más alto para compensar lo que subimos */
+            
+            /* --- CONFIGURACIÓN PARA ESCRITORIO (Desktop) --- */
+            /* La barra suele ser de una línea (~24px) */
+            top: -24px; 
+            height: calc(100% + 24px); 
+        }
+
+        /* 4. MEDIA QUERY: Reglas solo para Móviles (Pantallas < 768px) */
+        @media (max-width: 768px) {
+            iframe {
+                /* En móviles el texto de Google suele ocupar 2 líneas (~48px) */
+                top: -48px; 
+                height: calc(100% + 48px);
+            }
+        }
+        
+        /* 5. Ajuste fino para pantallas MUY pequeñas o iPhone antiguo */
+        @media (max-width: 380px) {
+            iframe {
+                top: -55px; /* Por si acaso ocupa 3 líneas */
+                height: calc(100% + 55px);
+            }
         }
     </style>
 </head>
 <body>
-    <iframe src="https://script.google.com/macros/s/AKfycbx3EkexYDyexqJXqTwX-AU87IB6TlhtsKoaDDTEgp6vBRzs39s6cB-dsuNZ40I7L4Tg/exec"></iframe>
+    <div class="iframe-container">
+        <iframe src="https://script.google.com/macros/s/AKfycbx3EkexYDyexqJXqTwX-AU87IB6TlhtsKoaDDTEgp6vBRzs39s6cB-dsuNZ40I7L4Tg/exec"></iframe>
+    </div>
 </body>
 </html>
